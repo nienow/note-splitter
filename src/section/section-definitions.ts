@@ -2,10 +2,10 @@ export interface ISectionData {
   editor: string;
   version: number;
   title?: boolean;
-  sections: Section[];
+  sections: ISectionSection[];
 }
 
-export interface Section {
+export interface ISectionSection {
   title?: string;
   text?: string;
 }

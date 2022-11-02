@@ -4,6 +4,7 @@ import AutoSizeTextArea from "./AutoSizeTextArea";
 import SectionHeader from "./SectionHeader";
 import {BigActionButton} from "../components/ActionButton";
 import {useEditor} from "../providers/EditorProvider";
+import SectionTitle from "./SectionTitle";
 
 const EditorContainer = styled.div`
   display: flex;
@@ -13,17 +14,6 @@ const EditorContainer = styled.div`
 
 const SectionContainer = styled.div`
 
-`;
-
-const SectionTitle = styled.input`
-  border: none;
-  background-color: var(--sn-stylekit-secondary-background-color);
-  outline: none;
-  color: var(--sn-stylekit-foreground-color);
-  line-height: 1.4;
-  padding: 5px 10px;
-  width: 100%;
-  box-sizing: border-box;
 `;
 
 const SectionEditor = () => {
@@ -58,7 +48,7 @@ const SectionEditor = () => {
           <SectionContainer key={index}>
             {
               data.title ?
-                <SectionTitle type="text" name="title" value={section.title} onChange={(e) => onTitleChange(e, index)}/>
+                <SectionTitle section={section} onChange={(e) => onTitleChange(e, index)}/>
                 : <div></div>
             }
             <AutoSizeTextArea section={section} onChange={(e) => onTextChange(e, index)}
