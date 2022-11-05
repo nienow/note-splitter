@@ -7,6 +7,7 @@ export const newEditorData = (text): IGridData => {
     version: DataVersion,
     rows: 2,
     columns: 2,
+    title: true,
     sections: [[{text: text || ''}, {}], [{}, {}]]
   };
 };
@@ -37,6 +38,7 @@ export const transformFromSticky = (data: any): IGridData => {
     version: 1,
     rows: 0,
     columns: 0,
+    title: true,
     sections: []
   };
 

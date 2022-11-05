@@ -43,7 +43,7 @@ const GridEditor = () => {
                 row.map((section, j) => {
                   return <EditorSection key={j}>
                     {
-                      <GridSection section={section} saveNote={saveNote}></GridSection>
+                      <GridSection section={section} saveNote={saveNote} showTitle={data.title}></GridSection>
                     }
                   </EditorSection>;
                 })

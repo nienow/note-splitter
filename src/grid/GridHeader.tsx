@@ -3,6 +3,7 @@ import {useDialog} from "../providers/DialogProvider";
 import styled from "styled-components";
 import {IGridData} from "./grid-definitions";
 import NumberControl from "../components/NumberControl";
+import ToggleButton from "../components/ToggleButton";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -83,10 +84,16 @@ const GridHeader = (params: Params) => {
     params.saveNote();
   };
 
+  const toggleTitle = () => {
+    params.data.title = !params.data.title;
+    params.saveNote();
+  };
+
   return (
     <HeaderContainer>
       <NumberControl increase={addColumn} decrease={checkLastColumn} display={params.data.columns + ' columns(s)'}></NumberControl>
       <NumberControl increase={addRow} decrease={checkLastRow} display={params.data.rows + ' row(s)'}></NumberControl>
+      <ToggleButton label="Show Title" initialValue={params.data.title} onToggle={toggleTitle}/>
     </HeaderContainer>
   );
 }

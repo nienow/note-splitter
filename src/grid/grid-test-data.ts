@@ -6,6 +6,7 @@ const data: IGridData = {
   version: DataVersion,
   rows: 2,
   columns: 2,
+  title: true,
   sections: [
     [
       {title: 'Section 1', text: 'Text 1'},

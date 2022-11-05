@@ -26,6 +26,7 @@ const SectionTextArea = styled.textarea`
 `;
 
 interface Params {
+  showTitle?: boolean;
   section: IGridSectionData;
   saveNote: () => void;
 }
@@ -50,7 +51,9 @@ const GridSection = (params: Params) => {
 
   return (
     <>
-      <SectionTitle type="text" name="title" value={title} onChange={onTitleChange}/>
+      {
+        params.showTitle ? <SectionTitle type="text" name="title" value={title} onChange={onTitleChange}/> : <div></div>
+      }
       <SectionTextArea tabIndex={1} name="value" value={text} onChange={onTextChange}/>
     </>
   );

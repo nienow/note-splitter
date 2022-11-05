@@ -3,6 +3,7 @@ export interface IGridData {
   version: number;
   rows: number;
   columns: number;
+  title?: boolean;
   sections: IGridSectionData[][];
 }
 
