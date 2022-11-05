@@ -25,12 +25,13 @@ const Tabs = styled.div`
 
 const TabTitleContainer = styled.div`
   border-right: 1px solid var(--sn-stylekit-border-color);
-  padding: 5px;
+  padding: 5px 10px;
   cursor: pointer;
   display: flex;
 
   &.active {
     background-color: var(--sn-stylekit-contrast-background-color);
+    border-bottom: 2px solid var(--sn-stylekit-secondary-contrast-border-color);
   }
 `;
 
@@ -41,14 +42,9 @@ const TabTitle = styled.div`
 const TabTitleEditable = styled.input`
   flex: 1 1 auto;
   border: none;
-  //background-color: var(--sn-stylekit-contrast-background-color);
   outline: none;
   color: var(--sn-stylekit-foreground-color);
 `;
-
-// const DeleteButton = styled.div`
-//   margin-left: 5px;
-// `;
 
 const SectionTextArea = styled.textarea`
   flex: 1 1 auto;
@@ -153,10 +149,6 @@ const TabEditor = () => {
           data.tabs.map((tab, index) => (
             <TabTitleContainer key={index} className={index === activeTab ? 'active' : ''}>
               {renderTabTitle(index, tab)}
-              {/*{*/}
-              {/*  (index === activeTab) ? <DeleteButton onClick={() => deleteTabConfirm(index)}><DeleteIcon></DeleteIcon></DeleteButton> :*/}
-              {/*    <div></div>*/}
-              {/*}*/}
             </TabTitleContainer>
           ))
         }
