@@ -19,7 +19,6 @@ const SectionTextArea = styled.textarea`
   line-height: 1.4;
   resize: none;
   color: var(--sn-stylekit-foreground-color);
-  border-bottom: 1px solid var(--sn-stylekit-border-color);
   overflow-y: hidden;
 `;
 

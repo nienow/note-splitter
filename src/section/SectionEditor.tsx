@@ -13,7 +13,15 @@ const EditorContainer = styled.div`
 `
 
 const SectionContainer = styled.div`
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--sn-stylekit-border-color);
+  border-right: 1px solid var(--sn-stylekit-border-color);
+  border-collapse: collapse;
+`;
 
+const ContentContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const SectionEditor = () => {
@@ -24,9 +32,11 @@ const SectionEditor = () => {
     saveNote();
   };
 
-  const addSection = () => {
-    const newTab = {text: ''};
-    data.sections.push(newTab);
+  const addRow = () => {
+    for (let i = 0; i < data.columns; i++) {
+      const newTab = {text: ''};
+      data.sections.push(newTab);
+    }
     saveNoteAndRefresh();
   };
 
@@ -40,23 +50,27 @@ const SectionEditor = () => {
     saveNote();
   };
 
+  const sectionWidth = (100 / data.columns) + '%';
+
   return (
     <EditorContainer>
-      <SectionHeader data={data} saveNote={saveNoteAndRefresh}/>
-      {
-        data.sections.map((section, index) => (
-          <SectionContainer key={index}>
-            {
-              data.title ?
-                <SectionTitle section={section} onChange={(e) => onTitleChange(e, index)}/>
-                : <div></div>
-            }
-            <AutoSizeTextArea section={section} onChange={(e) => onTextChange(e, index)}
-                              remove={() => removeSection(index)}></AutoSizeTextArea>
-          </SectionContainer>
-        ))
-      }
-      <BigActionButton onClick={addSection}>Add Section +</BigActionButton>
+      <SectionHeader/>
+      <ContentContainer>
+        {
+          data.sections.map((section, index) => (
+            <SectionContainer key={index} style={{'width': sectionWidth}}>
+              {
+                data.title ?
+                  <SectionTitle section={section} onChange={(e) => onTitleChange(e, index)}/>
+                  : <div></div>
+              }
+              <AutoSizeTextArea section={section} onChange={(e) => onTextChange(e, index)}
+                                remove={() => removeSection(index)}></AutoSizeTextArea>
+            </SectionContainer>
+          ))
+        }
+      </ContentContainer>
+      <BigActionButton onClick={addRow}>Add Row +</BigActionButton>
     </EditorContainer>
   );
 }
