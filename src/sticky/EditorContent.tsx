@@ -1,7 +1,7 @@
 import React, {createRef, useEffect, useRef} from 'react';
 import Section from "./Section";
 import styled from "styled-components";
-import {IStickyData} from "./sticky-definitions";
+import {IStickyData} from "./sticky-transformations";
 
 interface Params {
   data: IStickyData;

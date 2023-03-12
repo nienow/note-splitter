@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import {IGridSectionData} from "./grid-definitions";
+import {ISection} from "../definitions";
 
 const SectionTitle = styled.input`
   border: none;
@@ -27,7 +27,7 @@ const SectionTextArea = styled.textarea`
 
 interface Params {
   showTitle?: boolean;
-  section: IGridSectionData;
+  section: ISection;
   saveNote: () => void;
 }
 

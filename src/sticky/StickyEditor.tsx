@@ -2,8 +2,7 @@ import React from 'react';
 import Header from "./Header";
 import styled from "styled-components";
 import EditorContent from "./EditorContent";
-import {IStickySectionData} from "./sticky-definitions";
-import {newNoteData} from "./sticky-transformations";
+import {IStickySection, transformFromServer, transformToServer} from "./sticky-transformations";
 import {useEditor} from "../providers/EditorProvider";
 
 const EditorContainer = styled.div`
@@ -13,32 +12,43 @@ const EditorContainer = styled.div`
 `
 
 const StickyEditor = () => {
-  const {data, saveNote, saveNoteAndRefresh} = useEditor();
+  const {data: originalData, saveNote, saveNoteAndRefresh} = useEditor();
+
+  const transformedData = transformFromServer(originalData);
+
+  const transformAndSave = (refresh?: boolean) => {
+    transformToServer(originalData, transformedData);
+    if (refresh) {
+      saveNoteAndRefresh();
+    } else {
+      saveNote();
+    }
+  };
 
   const addSection = () => {
-    Object.values(data.sections).forEach((section: IStickySectionData) => {
+    Object.values(transformedData.sections).forEach((section: IStickySection) => {
       section.index++;
     });
     const newId = new Date().getTime();
-    data.sections[newId] = newNoteData();
-    saveNoteAndRefresh();
+    transformedData.sections[newId] = {index: 0};
+    transformAndSave(true);
   };
 
   const handleDelete = (sectionId) => {
-    const index = data.sections[sectionId].index;
-    delete data.sections[sectionId];
-    Object.values(data.sections).forEach((section: IStickySectionData) => {
+    const index = transformedData.sections[sectionId].index;
+    delete transformedData.sections[sectionId];
+    Object.values(transformedData.sections).forEach((section: IStickySection) => {
       if (section.index > index) {
         section.index--;
       }
     });
-    saveNoteAndRefresh();
+    transformAndSave(true);
   };
 
   return (
     <EditorContainer>
-      <Header data={data} addSection={addSection}></Header>
-      <EditorContent saveNote={saveNote} data={data} handleDelete={handleDelete}></EditorContent>
+      <Header data={transformedData} addSection={addSection}></Header>
+      <EditorContent saveNote={transformAndSave} data={transformedData} handleDelete={handleDelete}></EditorContent>
     </EditorContainer>
   );
 }

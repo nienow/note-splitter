@@ -1,0 +1,12 @@
+{
+  "identifier": "randombits.dividers",
+  "name": "Note Dividers",
+  "content_type": "SN|Component",
+  "area": "editor-editor",
+  "version": "0.1.0",
+  "description": "Different note divider options",
+  "url": "https://nienow.github.io/sn-extensions",
+  "download_url": "",
+  "latest_url": "",
+  "thumbnail_url": ""
+}

@@ -32,16 +32,20 @@ const EditorSection = styled.div`
 const GridEditor = () => {
   const {data, saveNote, saveNoteAndRefresh} = useEditor();
 
+  const rows = Math.ceil(data.sections.length / data.columns);
+
   return (
     <EditorContainer>
       <GridHeader data={data} saveNote={saveNoteAndRefresh}></GridHeader>
       <EditorContent>
         {
-          data.sections.map((row, i) => {
+          [...Array(rows)].map((_, i) => {
             return <EditorRow key={i}>
               {
-                row.map((section, j) => {
-                  return <EditorSection key={j}>
+                [...Array(data.columns)].map((_, j) => {
+                  const index = i * data.columns + j;
+                  const section = data.sections[index];
+                  return <EditorSection key={JSON.stringify(section)}>
                     {
                       <GridSection section={section} saveNote={saveNote} showTitle={data.title}></GridSection>
                     }

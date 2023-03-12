@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import {ISectionSection} from "./section-definitions";
+import {ISection} from "../definitions";
 
 interface Params {
-  section: ISectionSection;
+  section: ISection;
   onChange: (e) => void;
 }
 

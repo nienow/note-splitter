@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import {useDialog} from "../providers/DialogProvider";
-import {IStickySectionData} from "./sticky-definitions";
 import DeleteIcon from "../components/icons/DeleteIcon";
+import {IStickySection} from "./sticky-transformations";
 
 
 const SectionTitle = styled.div`
@@ -49,7 +49,7 @@ const DeleteButton = styled.button`
 `;
 
 interface Params {
-  section: IStickySectionData;
+  section: IStickySection;
   onChange: (e) => void;
   onDelete: () => void;
 }

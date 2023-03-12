@@ -1,9 +1,10 @@
 import React from 'react';
 import {useDialog} from "../providers/DialogProvider";
 import styled from "styled-components";
-import {IGridData} from "./grid-definitions";
 import NumberControl from "../components/NumberControl";
 import ToggleButton from "../components/ToggleButton";
+import EditorChoice from "../components/EditorChoice";
+import {IData} from "../definitions";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -12,25 +13,27 @@ const HeaderContainer = styled.div`
 `
 
 interface Params {
-  data: IGridData;
+  data: IData;
   saveNote: () => void;
 }
 
-const GridHeader = (params: Params) => {
+const GridHeader = ({data, saveNote}: Params) => {
   const {confirm, alert} = useDialog();
 
   const addColumn = () => {
-    params.data.columns++;
-    params.data.sections.forEach(row => {
-      row.push({});
-    });
-    params.saveNote();
+    for (let i = data.sections.length - 1; i >= 0; i--) {
+      if ((i + 1) % data.columns === 0) {
+        data.sections.splice(i + 1, 0, {});
+      }
+    }
+    data.columns++;
+    saveNote();
   };
 
   const checkLastColumn = () => {
-    if (params.data.columns > 1) {
-      const hasContent = !!params.data.sections.find(row => {
-        return !!row[row.length - 1].text;
+    if (data.columns > 1) {
+      const hasContent = !!data.sections.find((section, i) => {
+        return (i + 1) % data.columns === 0 && !!section.text;
       });
       if (hasContent) {
         confirm('Removing a column will delete content? Are you sure?', () => {
@@ -45,27 +48,26 @@ const GridHeader = (params: Params) => {
   };
 
   const removeColumn = () => {
-    params.data.columns--;
-    params.data.sections.forEach(row => {
-      row.pop();
-    });
-    params.saveNote();
+    for (let i = data.sections.length - 1; i >= 0; i--) {
+      if ((i + 1) % data.columns === 0) {
+        data.sections.splice(i, 1);
+      }
+    }
+    data.columns--;
+    saveNote();
   };
 
   const addRow = () => {
-    params.data.rows++;
-    const newRow = [];
-    for (let i = 0; i < params.data.columns; i++) {
-      newRow.push({});
+    for (let i = 0; i < data.columns; i++) {
+      data.sections.push({});
     }
-    params.data.sections.push(newRow);
-    params.saveNote();
+    saveNote();
   };
 
   const checkLastRow = () => {
-    if (params.data.rows > 1) {
-      const lastRow = params.data.sections[params.data.sections.length - 1];
-      const hasContent = !!lastRow.find(column => !!column.text);
+    if (data.sections.length > data.columns) {
+      const startChecking = data.sections.length - data.columns;
+      const hasContent = !!data.sections.find((section, i) => i >= startChecking && !!section.text);
       if (hasContent) {
         confirm('Removing a row will delete content? Are you sure?', () => {
           removeRow();
@@ -79,21 +81,23 @@ const GridHeader = (params: Params) => {
   };
 
   const removeRow = () => {
-    params.data.rows--;
-    params.data.sections.pop();
-    params.saveNote();
+    const startRemoving = data.sections.length - data.columns;
+    data.sections = data.sections.slice(0, startRemoving);
+    saveNote();
   };
 
   const toggleTitle = () => {
-    params.data.title = !params.data.title;
-    params.saveNote();
+    data.title = !data.title;
+    saveNote();
   };
 
+  const rows = Math.ceil(data.sections.length / data.columns);
   return (
     <HeaderContainer>
-      <NumberControl increase={addColumn} decrease={checkLastColumn} display={params.data.columns + ' columns(s)'}></NumberControl>
-      <NumberControl increase={addRow} decrease={checkLastRow} display={params.data.rows + ' row(s)'}></NumberControl>
-      <ToggleButton label="Show Title" initialValue={params.data.title} onToggle={toggleTitle}/>
+      <EditorChoice value="randombits.grid"/>
+      <NumberControl increase={addColumn} decrease={checkLastColumn} display={data.columns + ' columns(s)'}></NumberControl>
+      <NumberControl increase={addRow} decrease={checkLastRow} display={rows + ' row(s)'}></NumberControl>
+      <ToggleButton label="Show Title" initialValue={data.title} onToggle={toggleTitle}/>
     </HeaderContainer>
   );
 }

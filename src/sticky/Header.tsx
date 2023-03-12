@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
 import PlusIcon from "../components/icons/PlusIcon";
-import {IStickyData} from "./sticky-definitions";
+import EditorChoice from "../components/EditorChoice";
+import {IData} from "../definitions";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const HeaderButton = styled.button`
 `
 
 interface Params {
-  data: IStickyData;
+  data: IData;
   addSection: () => void;
 }
 
@@ -29,6 +30,7 @@ const Header = (params: Params) => {
 
   return (
     <HeaderContainer>
+      <EditorChoice value="randombits.sticky"/>
       <HeaderButton onClick={params.addSection}><PlusIcon/> Add Note</HeaderButton>
     </HeaderContainer>
   );

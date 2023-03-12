@@ -2,11 +2,13 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 import EditorKit from "@standardnotes/editor-kit";
 import Unsupported from "../components/Unsupported";
 import {isDevEnv} from "../environment";
-import {IEditorConfig} from "../editor-config";
+import {newData, transformEditorData} from "../transformations";
+import {TEST_DATA} from "../test-data";
+import {EDITORS} from "../definitions";
 
-interface Props {
-  config: IEditorConfig;
-}
+// interface Props {
+//   config: IEditorConfig;
+// }
 
 interface IEditorContext {
   data: any;
@@ -14,6 +16,7 @@ interface IEditorContext {
   saveNote: () => void;
   saveNoteAndRefresh: () => void;
   revertChanges: () => void;
+  changeEditor: (name: string) => void;
 }
 
 const EditorContext = createContext<IEditorContext>({
@@ -21,26 +24,32 @@ const EditorContext = createContext<IEditorContext>({
   hasChanges: false,
   saveNote: null,
   saveNoteAndRefresh: null,
-  revertChanges: null
+  revertChanges: null,
+  changeEditor: null
 });
 
 export const useEditor = () => useContext(EditorContext);
 
 let backupData;
-export const EditorProvider = ({config}: Props) => {
+export const EditorProvider = () => {
   const [editor, setEditor] = useState(null);
   const [data, setData] = useState(null);
   const [hasChanges, setHasChanges] = useState(false);
   const [unsupported, setUnsupported] = useState(false);
 
+  const changeEditor = (name: string) => {
+    data.editor = name;
+    saveNoteAndRefresh();
+  };
+
   const eraseDataAndStartNewNote = () => {
     setUnsupported(false);
-    setData(config.transform());
+    setData(newData());
     saveNote();
   };
 
   const initializeText = (text) => {
-    const data = config.transform(text);
+    const data = transformEditorData(text);
     if (data) {
       backupData = JSON.parse(JSON.stringify(data));
       setData(data);
@@ -61,7 +70,7 @@ export const EditorProvider = ({config}: Props) => {
     }));
 
     if (isDevEnv()) {
-      initializeText(config.testData);
+      initializeText(TEST_DATA);
     }
   }, []);
 
@@ -89,7 +98,8 @@ export const EditorProvider = ({config}: Props) => {
 
   const renderContent = () => {
     if (data) {
-      return <config.editor/>;
+      const Editor = EDITORS[data.editor];
+      return <Editor/>;
     } else if (unsupported) {
       return <Unsupported eraseFn={eraseDataAndStartNewNote}></Unsupported>;
     } else {
@@ -98,7 +108,7 @@ export const EditorProvider = ({config}: Props) => {
   };
 
   return (
-    <EditorContext.Provider value={{data, hasChanges, saveNote, saveNoteAndRefresh, revertChanges}}>
+    <EditorContext.Provider value={{data, hasChanges, changeEditor, saveNote, saveNoteAndRefresh, revertChanges}}>
       {renderContent()}
     </EditorContext.Provider>
   );

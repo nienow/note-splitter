@@ -5,6 +5,7 @@ import NumberControl from "../components/NumberControl";
 import {useEditor} from "../providers/EditorProvider";
 import ActionButton from "../components/ActionButton";
 import {clearEmptySections, makeSectionsFillRows} from "./section-transformations";
+import EditorChoice from "../components/EditorChoice";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -42,6 +43,7 @@ const GridHeader = () => {
 
   return (
     <HeaderContainer>
+      <EditorChoice value="randombits.section"/>
       <ToggleButton label="Show Title" initialValue={data.title} onToggle={toggleTitle}/>
       <NumberControl increase={increaseColumns} decrease={decreaseColumns} display={numColumns + " Columns"}/>
       <ActionButton onClick={clearEmpty}>Clear Empty Sections</ActionButton>

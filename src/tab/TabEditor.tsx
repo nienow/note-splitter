@@ -5,6 +5,7 @@ import DeleteIcon from "../components/icons/DeleteIcon";
 import {usePopover} from "../providers/PopoverProvider";
 import ActionButton from "../components/ActionButton";
 import {useEditor} from "../providers/EditorProvider";
+import EditorChoice from "../components/EditorChoice";
 
 const EditorContainer = styled.div`
   display: flex;
@@ -17,6 +18,10 @@ const EditorContent = styled.div`
   flex-direction: column;
   flex: 1 1 auto;
 `
+
+const Header = styled.div`
+  display: flex;
+`;
 
 const Tabs = styled.div`
   display: flex;
@@ -84,19 +89,19 @@ const TabEditor = () => {
   };
 
   const onTextChange = (e) => {
-    data.tabs[activeTab].text = e.target.value;
+    data.sections[activeTab].text = e.target.value;
     saveNoteAndRefresh();
   };
 
   const addTab = () => {
     const newTab = {title: 'New'};
-    data.tabs.push(newTab);
-    setActiveTab(data.tabs.length - 1);
+    data.sections.push(newTab);
+    setActiveTab(data.sections.length - 1);
     saveNoteAndRefresh();
   };
 
   const deleteTabConfirm = (index) => {
-    if (data.tabs[index].text) {
+    if (data.sections[index].text) {
       confirm('Are you sure you want to remove this tab?', () => {
         deleteTab(index)
       });
@@ -106,14 +111,13 @@ const TabEditor = () => {
   };
 
   const deleteTab = (index) => {
-    data.tabs.splice(index, 1);
+    data.sections.splice(index, 1);
     setActiveTab(0);
     saveNoteAndRefresh();
   };
 
   const onTitleChange = () => {
-    console.log(workingTitle);
-    data.tabs[activeTab].title = workingTitle;
+    data.sections[activeTab].title = workingTitle;
     saveNoteAndRefresh();
   };
 
@@ -128,7 +132,7 @@ const TabEditor = () => {
       <TabTitleEditable id="working-title" defaultValue={tab.title} onChange={(e) => workingTitle = e.target.value}></TabTitleEditable>
       <ActionButton onClick={onDeleteIconClick}><DeleteIcon/></ActionButton>
     </div>;
-    closePopover = popover(e.target.parentNode, popoverContents, onTitleChange);
+    closePopover = popover(e.currentTarget, popoverContents, onTitleChange);
     setTimeout(() => {
       const el = document.getElementById('working-title') as HTMLInputElement;
       el.select();
@@ -137,25 +141,28 @@ const TabEditor = () => {
 
   const renderTabTitle = (index, tab) => {
     if (index === activeTab) {
-      return <TabTitle onClick={(e) => openPopover(e, tab, index)}>{tab.title}</TabTitle>;
+      return <TabTitleContainer key={index} className={index === activeTab ? 'active' : ''} onClick={(e) => openPopover(e, tab, index)}>
+        <TabTitle>{tab.title}</TabTitle>
+      </TabTitleContainer>;
     }
-    return <TabTitle onClick={() => changeTab(index)}>{tab.title}</TabTitle>
+    return <TabTitleContainer key={index} className={index === activeTab ? 'active' : ''} onClick={() => changeTab(index)}>
+      <TabTitle>{tab.title}</TabTitle>
+    </TabTitleContainer>;
   };
 
   return (
     <EditorContainer>
-      <Tabs>
-        {
-          data.tabs.map((tab, index) => (
-            <TabTitleContainer key={index} className={index === activeTab ? 'active' : ''}>
-              {renderTabTitle(index, tab)}
-            </TabTitleContainer>
-          ))
-        }
-        <AddTabButton onClick={addTab}>+</AddTabButton>
-      </Tabs>
+      <Header>
+        <EditorChoice value="randombits.tab"/>
+        <Tabs>
+          {
+            data.sections.map((tab, index) => renderTabTitle(index, tab))
+          }
+          <AddTabButton onClick={addTab}>+</AddTabButton>
+        </Tabs>
+      </Header>
       <EditorContent>
-        <SectionTextArea tabIndex={1} name="value" value={data.tabs[activeTab]?.text || ''} onChange={onTextChange}/>
+        <SectionTextArea tabIndex={1} name="value" value={data.sections[activeTab]?.text || ''} onChange={onTextChange}/>
       </EditorContent>
     </EditorContainer>
   );
