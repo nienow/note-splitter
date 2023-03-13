@@ -8,29 +8,23 @@ import {EDITORS} from "../definitions";
 
 interface IEditorContext {
   data: any;
-  hasChanges: boolean;
   saveNote: () => void;
   saveNoteAndRefresh: () => void;
-  revertChanges: () => void;
   changeEditor: (name: string) => void;
 }
 
 const EditorContext = createContext<IEditorContext>({
   data: null,
-  hasChanges: false,
   saveNote: null,
   saveNoteAndRefresh: null,
-  revertChanges: null,
   changeEditor: null
 });
 
 export const useEditor = () => useContext(EditorContext);
 
-let backupData;
 export const EditorProvider = () => {
   const [editor, setEditor] = useState(null);
   const [data, setData] = useState(null);
-  const [hasChanges, setHasChanges] = useState(false);
   const [unsupported, setUnsupported] = useState(false);
 
   const changeEditor = (name: string) => {
@@ -47,7 +41,6 @@ export const EditorProvider = () => {
   const initializeText = (text) => {
     const data = transformEditorData(text);
     if (data) {
-      backupData = JSON.parse(JSON.stringify(data));
       setData(data);
     } else {
       setUnsupported(true);
@@ -72,7 +65,7 @@ export const EditorProvider = () => {
 
 
   const saveNote = () => {
-    setHasChanges(true);
+    // setHasChanges(true);
     const text = JSON.stringify(data);
     try {
       editor.onEditorValueChanged(text);
@@ -84,12 +77,6 @@ export const EditorProvider = () => {
   const saveNoteAndRefresh = () => {
     setData({...data});
     saveNote();
-  };
-
-  const revertChanges = () => {
-    saveNote();
-    setData(JSON.parse(JSON.stringify(backupData)));
-    setHasChanges(false);
   };
 
   const renderContent = () => {
@@ -104,7 +91,7 @@ export const EditorProvider = () => {
   };
 
   return (
-    <EditorContext.Provider value={{data, hasChanges, changeEditor, saveNote, saveNoteAndRefresh, revertChanges}}>
+    <EditorContext.Provider value={{data, changeEditor, saveNote, saveNoteAndRefresh}}>
       {renderContent()}
     </EditorContext.Provider>
   );
