@@ -60,7 +60,6 @@ const EditorContent = ({data, saveNote, handleDelete}: Params) => {
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize();
-    console.log(sectionRefs.current);
     return () => {
       window.removeEventListener("resize", handleResize)
     };

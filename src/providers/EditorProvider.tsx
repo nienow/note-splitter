@@ -6,10 +6,6 @@ import {newData, transformEditorData} from "../transformations";
 import {TEST_DATA} from "../test-data";
 import {EDITORS} from "../definitions";
 
-// interface Props {
-//   config: IEditorConfig;
-// }
-
 interface IEditorContext {
   data: any;
   hasChanges: boolean;
@@ -50,7 +46,6 @@ export const EditorProvider = () => {
 
   const initializeText = (text) => {
     const data = transformEditorData(text);
-    console.log(data);
     if (data) {
       backupData = JSON.parse(JSON.stringify(data));
       setData(data);
