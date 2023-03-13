@@ -1,0 +1,12 @@
+{
+  "identifier": "randombits.dividers.local",
+  "name": "Splitter (local)",
+  "content_type": "SN|Component",
+  "area": "editor-editor",
+  "version": "0.1.0",
+  "description": "Split a note into different sections",
+  "url": "http://localhost:3000/sn-extensions",
+  "download_url": "",
+  "latest_url": "",
+  "thumbnail_url": "http://localhost:3000/sn-extensions/i.svg"
+}
