@@ -50,6 +50,7 @@ export const EditorProvider = () => {
 
   const initializeText = (text) => {
     const data = transformEditorData(text);
+    console.log(data);
     if (data) {
       backupData = JSON.parse(JSON.stringify(data));
       setData(data);

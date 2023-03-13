@@ -45,7 +45,7 @@ const GridEditor = () => {
                 [...Array(data.columns)].map((_, j) => {
                   const index = i * data.columns + j;
                   const section = data.sections[index];
-                  return <EditorSection key={JSON.stringify(section)}>
+                  return <EditorSection key={Math.random()}>
                     {
                       <GridSection section={section} saveNote={saveNote} showTitle={data.title}></GridSection>
                     }
