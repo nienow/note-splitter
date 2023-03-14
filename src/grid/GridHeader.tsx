@@ -5,6 +5,7 @@ import NumberControl from "../components/NumberControl";
 import ToggleButton from "../components/ToggleButton";
 import EditorChoice from "../components/EditorChoice";
 import {IData} from "../definitions";
+import {makeSectionsFillRows} from "../section/section-transformations";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -20,40 +21,17 @@ interface Params {
 const GridHeader = ({data, saveNote}: Params) => {
   const {confirm, alert} = useDialog();
 
-  const addColumn = () => {
-    for (let i = data.sections.length - 1; i >= 0; i--) {
-      if ((i + 1) % data.columns === 0) {
-        data.sections.splice(i + 1, 0, {});
-      }
-    }
+  const increaseColumns = () => {
     data.columns++;
+    makeSectionsFillRows(data);
     saveNote();
   };
 
-  const checkLastColumn = () => {
+  const decreaseColumns = () => {
     if (data.columns > 1) {
-      const hasContent = !!data.sections.find((section, i) => {
-        return (i + 1) % data.columns === 0 && !!section.text;
-      });
-      if (hasContent) {
-        confirm('Removing a column will delete content? Are you sure?', () => {
-          removeColumn();
-        })
-      } else {
-        removeColumn();
-      }
-    } else {
-      alert('Cannot delete the only column');
+      data.columns--;
     }
-  };
-
-  const removeColumn = () => {
-    for (let i = data.sections.length - 1; i >= 0; i--) {
-      if ((i + 1) % data.columns === 0) {
-        data.sections.splice(i, 1);
-      }
-    }
-    data.columns--;
+    makeSectionsFillRows(data);
     saveNote();
   };
 
@@ -95,7 +73,7 @@ const GridHeader = ({data, saveNote}: Params) => {
   return (
     <HeaderContainer>
       <EditorChoice value="randombits.grid"/>
-      <NumberControl increase={addColumn} decrease={checkLastColumn} display={data.columns + ' columns(s)'}></NumberControl>
+      <NumberControl increase={increaseColumns} decrease={decreaseColumns} display={data.columns + ' column(s)'}></NumberControl>
       <NumberControl increase={addRow} decrease={checkLastRow} display={rows + ' row(s)'}></NumberControl>
       <ToggleButton label="Show Title" initialValue={data.title} onToggle={toggleTitle}/>
     </HeaderContainer>

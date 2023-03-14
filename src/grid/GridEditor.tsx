@@ -34,7 +34,6 @@ const GridEditor = () => {
 
   const rows = Math.ceil(data.sections.length / data.columns);
 
-  console.log(data);
   return (
     <EditorContainer>
       <GridHeader data={data} saveNote={saveNoteAndRefresh}></GridHeader>

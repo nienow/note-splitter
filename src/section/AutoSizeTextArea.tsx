@@ -5,7 +5,6 @@ import {ISection} from "../definitions";
 interface Params {
   section: ISection;
   onChange: (e) => void;
-  remove: () => void;
 }
 
 const SectionTextArea = styled.textarea`
@@ -22,7 +21,7 @@ const SectionTextArea = styled.textarea`
   overflow-y: hidden;
 `;
 
-const AutoSizeTextArea = ({section, onChange, remove}: Params) => {
+const AutoSizeTextArea = ({section, onChange}: Params) => {
   const [text, setText] = useState(section.text);
   const ref = useRef<HTMLTextAreaElement>();
 
@@ -38,14 +37,8 @@ const AutoSizeTextArea = ({section, onChange, remove}: Params) => {
     onChange(e);
   };
 
-  const onKeyUp = (e) => {
-    if (e.key === 'Delete' && text?.trim().length === 0) {
-      remove();
-    }
-  };
-
   return (
-    <SectionTextArea ref={ref} value={text} onChange={onLocalChange} onKeyUp={onKeyUp}></SectionTextArea>
+    <SectionTextArea ref={ref} value={text} onChange={onLocalChange}></SectionTextArea>
   );
 }
 
