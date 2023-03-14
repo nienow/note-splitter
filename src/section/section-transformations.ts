@@ -1,15 +1,4 @@
-import {DataVersion, NienowSection} from '../constants';
 import {IData} from '../definitions';
-
-export const newEditorData = (text): IData => {
-  return {
-    editor: NienowSection,
-    version: DataVersion,
-    title: false,
-    columns: 1,
-    sections: [{text: text || ''}]
-  };
-};
 
 export const makeSectionsFillRows = (data: IData) => {
   let lonelySections = data.sections.length % data.columns;
@@ -35,11 +24,20 @@ export const makeSectionsFillRows = (data: IData) => {
 };
 
 export const clearEmptySections = (data: IData) => {
-  for (let i = data.sections.length - 1; i >= 0; i--) {
-    const sectionToCheck = data.sections[i];
-    if (!sectionToCheck.title && !sectionToCheck.text) {
-      data.sections.splice(i, 1);
+  const rows = Math.ceil(data.sections.length / data.columns);
+  for (let row = rows - 1; row >= 0; row--) {
+    let rowIsEmpty = true;
+    for (let col = 0; col < data.columns; col++) {
+      const index = row * data.columns + col;
+      const sectionToCheck = data.sections[index];
+      if (sectionToCheck.title || sectionToCheck.text) {
+        rowIsEmpty = false;
+        break;
+      }
+    }
+    if (rowIsEmpty) {
+      data.sections.splice(row * data.columns, data.columns);
     }
   }
-  makeSectionsFillRows(data);
+  // makeSectionsFillRows(data);
 };

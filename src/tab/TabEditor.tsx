@@ -35,7 +35,7 @@ const TabTitleContainer = styled.div`
   display: flex;
 
   &.active {
-    background-color: var(--sn-stylekit-contrast-background-color);
+    background-color: var(--sn-stylekit-secondary-background-color);
     border-bottom: 2px solid var(--sn-stylekit-secondary-contrast-border-color);
   }
 `;
@@ -73,7 +73,7 @@ const AddTabButton = styled.button`
   border-right: 1px solid var(--sn-stylekit-border-color);
 
   &:hover {
-    background-color: var(--sn-stylekit-contrast-background-color);;
+    background-color: var(--sn-stylekit-secondary-background-color);
   }
 `;
 

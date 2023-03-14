@@ -58,7 +58,7 @@ const SectionEditor = () => {
       <ContentContainer>
         {
           data.sections.map((section, index) => (
-            <SectionContainer key={index} style={{'width': sectionWidth}}>
+            <SectionContainer key={Math.random()} style={{'width': sectionWidth}}>
               {
                 data.title ?
                   <SectionTitle section={section} onChange={(e) => onTitleChange(e, index)}/>

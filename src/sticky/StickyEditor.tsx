@@ -26,11 +26,13 @@ const StickyEditor = () => {
   };
 
   const addSection = () => {
+    let largestIndex = 0;
     Object.values(transformedData.sections).forEach((section: IStickySection) => {
-      section.index++;
+      largestIndex = section.index > largestIndex ? section.index : largestIndex;
     });
+
     const newId = new Date().getTime();
-    transformedData.sections[newId] = {index: 0};
+    transformedData.sections[newId] = {title: 'New', index: largestIndex + 1};
     transformAndSave(true);
   };
 
@@ -42,6 +44,7 @@ const StickyEditor = () => {
         section.index--;
       }
     });
+    console.log(transformedData);
     transformAndSave(true);
   };
 

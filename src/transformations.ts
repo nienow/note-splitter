@@ -2,9 +2,6 @@ import {DataVersion, NienowGrid} from './constants';
 import {IData} from './definitions';
 
 export const transformEditorData = (text?: string): IData => {
-  if (!text) {
-    return newData('');
-  }
   if (text.indexOf('{') === 0) {
     try {
       const parsedData = JSON.parse(text);
@@ -17,12 +14,17 @@ export const transformEditorData = (text?: string): IData => {
   }
 };
 
-export const newData = (text?: string): IData => {
+export const newData = (): IData => {
   return {
     editor: NienowGrid,
     version: DataVersion,
     columns: 2,
     title: true,
-    sections: [{text: text || ''}, {}, {}, {}]
+    sections: [{title: 'One'}, {title: 'Two'}, {title: 'Three'}, {title: 'Four'}]
   };
 };
+
+export const fillColumnsInGrid = () => {
+
+};
+

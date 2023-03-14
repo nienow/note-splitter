@@ -39,11 +39,17 @@ export const EditorProvider = () => {
   };
 
   const initializeText = (text) => {
-    const data = transformEditorData(text);
-    if (data) {
+    if (!text) {
+      const data = newData();
       setData(data);
+      saveNote();
     } else {
-      setUnsupported(true);
+      const data = transformEditorData(text);
+      if (data) {
+        setData(data);
+      } else {
+        setUnsupported(true);
+      }
     }
   };
 
@@ -65,7 +71,6 @@ export const EditorProvider = () => {
 
 
   const saveNote = () => {
-    // setHasChanges(true);
     const text = JSON.stringify(data);
     try {
       editor.onEditorValueChanged(text);

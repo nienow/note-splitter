@@ -5,9 +5,11 @@ export const ActionButton = styled.button`
   border: 1px solid var(--sn-stylekit-border-color);
   color: inherit;
   cursor: pointer;
+  margin: 0 5px;
+  padding: 5px 10px;
 
   &:hover {
-    background-color: var(--sn-stylekit-contrast-background-color);
+    background-color: var(--sn-stylekit-secondary-background-color);
   }
 `
 

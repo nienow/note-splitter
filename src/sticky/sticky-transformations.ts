@@ -13,8 +13,9 @@ export const transformFromServer = (originalData) => {
     ...originalData,
     sections: {}
   };
+  const keyPrefix = new Date().getTime();
   originalData.sections.forEach((section, i) => {
-    transformedData.sections[i] = {
+    transformedData.sections[keyPrefix + i] = {
       ...section,
       index: i
     };

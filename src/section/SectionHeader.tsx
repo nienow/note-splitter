@@ -44,9 +44,9 @@ const GridHeader = () => {
   return (
     <HeaderContainer>
       <EditorChoice value="randombits.section"/>
-      <ToggleButton label="Show Title" initialValue={data.title} onToggle={toggleTitle}/>
       <NumberControl increase={increaseColumns} decrease={decreaseColumns} display={numColumns + " Columns"}/>
-      <ActionButton onClick={clearEmpty}>Clear Empty Sections</ActionButton>
+      <ToggleButton label="Show Title" initialValue={data.title} onToggle={toggleTitle}/>
+      <ActionButton onClick={clearEmpty}>Clear Empty Rows</ActionButton>
     </HeaderContainer>
   );
 }
