@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
-
+const PACKAGE = require('./package.json');
+const version = PACKAGE.version;
 
 module.exports = {
   mode: 'production',
@@ -57,7 +58,14 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        {from: 'public'}
+        {
+          from: 'public',
+          transform(content) {
+            return content
+              .toString()
+              .replace('$VERSION$', version);
+          }
+        }
       ]
     })
   ],

@@ -1,9 +1,9 @@
 {
-  "identifier": "randombits.dividers",
+  "identifier": "randombits.splitter",
   "name": "Splitter",
   "content_type": "SN|Component",
   "area": "editor-editor",
-  "version": "0.1.0",
+  "version": "$VERSION$",
   "description": "Split a note into different sections",
   "url": "https://nienow.github.io/sn-extensions",
   "download_url": "",

@@ -29,7 +29,7 @@ const ToggleButton = ({label, initialValue, onToggle}: Params) => {
     onToggle(!value);
   };
   return <ToggleButtonContainer onClick={toggle}>
-    {value ? <ToggleButtonImg width="18" src="check2.svg"/> : <ToggleButtonImg width="18" src="uncheck.svg"/>}
+    {value ? <ToggleButtonImg width="18" src="check.svg"/> : <ToggleButtonImg width="18" src="uncheck.svg"/>}
     {label}
   </ToggleButtonContainer>;
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import GridHeader from "./GridHeader";
 import GridSection from "./GridSection";
 import styled from "styled-components";
 import {useEditor} from "../providers/EditorProvider";
+import SectionHeader from "../section/SectionHeader";
 
 const EditorContainer = styled.div`
   display: flex;
@@ -30,13 +30,13 @@ const EditorSection = styled.div`
 `
 
 const GridEditor = () => {
-  const {data, saveNote, saveNoteAndRefresh} = useEditor();
+  const {data, saveNote} = useEditor();
 
   const rows = Math.ceil(data.sections.length / data.columns);
 
   return (
     <EditorContainer>
-      <GridHeader data={data} saveNote={saveNoteAndRefresh}></GridHeader>
+      <SectionHeader/>
       <EditorContent>
         {
           [...Array(rows)].map((_, i) => {

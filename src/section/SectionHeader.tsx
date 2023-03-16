@@ -35,11 +35,6 @@ const GridHeader = () => {
     saveNoteAndRefresh();
   };
 
-  // const clearEmpty = () => {
-  //   clearEmptySections(data);
-  //   saveNoteAndRefresh();
-  // };
-
   const addRow = () => {
     for (let i = 0; i < data.columns; i++) {
       data.sections.push({});
@@ -74,11 +69,10 @@ const GridHeader = () => {
 
   return (
     <HeaderContainer>
-      <EditorChoice value="randombits.section"/>
+      <EditorChoice value={data.editor}/>
       <NumberControl increase={increaseColumns} decrease={decreaseColumns} display={numColumns + " column(s)"}/>
       <NumberControl increase={addRow} decrease={checkLastRow} display={rows + ' row(s)'}></NumberControl>
       <ToggleButton label="Show Title" initialValue={data.title} onToggle={toggleTitle}/>
-      {/*<ActionButton onClick={clearEmpty}>Clear Empty Rows</ActionButton>*/}
     </HeaderContainer>
   );
 }
