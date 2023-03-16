@@ -24,7 +24,39 @@ export const newData = (): IData => {
   };
 };
 
-export const fillColumnsInGrid = () => {
+export const makeSectionsFillRows = (data: IData) => {
+  let lonelySections = data.sections.length % data.columns;
+  if (lonelySections) {
+    lonelySections = data.sections.length % data.columns;
+    if (lonelySections) {
+      const fillCount = data.columns - lonelySections;
+      for (let i = 0; i < fillCount; i++) {
+        const newTab = {};
+        data.sections.push(newTab);
+      }
+    }
+  }
+  clearEmptyRows(data);
 
+};
+
+export const clearEmptyRows = (data: IData) => {
+  const rows = Math.ceil(data.sections.length / data.columns);
+  for (let row = rows - 1; row >= 0; row--) {
+    let rowIsEmpty = true;
+    for (let col = 0; col < data.columns; col++) {
+      const index = row * data.columns + col;
+      const sectionToCheck = data.sections[index];
+      if (sectionToCheck.title || sectionToCheck.text) {
+        rowIsEmpty = false;
+        break;
+      }
+    }
+    if (rowIsEmpty) {
+      data.sections.splice(row * data.columns, data.columns);
+    } else {
+      break;
+    }
+  }
 };
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ToggleButton from "../components/ToggleButton";
 import NumberControl from "../components/NumberControl";
 import {useEditor} from "../providers/EditorProvider";
-import {makeSectionsFillRows} from "./section-transformations";
+import {makeSectionsFillRows} from "../transformations";
 import EditorChoice from "../components/EditorChoice";
 import {useDialog} from "../providers/DialogProvider";
 

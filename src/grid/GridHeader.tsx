@@ -5,7 +5,7 @@ import NumberControl from "../components/NumberControl";
 import ToggleButton from "../components/ToggleButton";
 import EditorChoice from "../components/EditorChoice";
 import {IData} from "../definitions";
-import {makeSectionsFillRows} from "../section/section-transformations";
+import {makeSectionsFillRows} from "../transformations";
 
 const HeaderContainer = styled.div`
   display: flex;
