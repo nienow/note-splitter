@@ -1,8 +1,8 @@
-import {DataVersion, NienowGrid} from './constants';
+import {DataVersion, EDITOR_GRID} from './constants';
 import {IData} from './definitions';
 
 const data: IData = {
-  editor: NienowGrid,
+  editor: EDITOR_GRID,
   version: DataVersion,
   columns: 2,
   title: true,

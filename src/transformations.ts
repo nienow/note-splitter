@@ -1,4 +1,4 @@
-import {DataVersion, NienowGrid} from './constants';
+import {DataVersion, EDITOR_GRID} from './constants';
 import {IData} from './definitions';
 
 export const transformEditorData = (text?: string): IData => {
@@ -16,7 +16,7 @@ export const transformEditorData = (text?: string): IData => {
 
 export const newData = (): IData => {
   return {
-    editor: NienowGrid,
+    editor: EDITOR_GRID,
     version: DataVersion,
     columns: 2,
     title: true,
