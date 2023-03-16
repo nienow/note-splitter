@@ -3,7 +3,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const PACKAGE = require('./package.json');
 const version = PACKAGE.version;
 
-module.exports = {
+module.exports = (env, argv) => ({
   mode: 'production',
   output: {
     filename: "[name].[contenthash].js",
@@ -30,7 +30,12 @@ module.exports = {
         use: [
           "style-loader",
           "css-loader",
-          "sass-loader"
+          {
+            loader: "sass-loader",
+            options: {
+              additionalData: `$dev: ${argv.mode === 'development'};`
+            }
+          }
         ],
       },
       {
@@ -69,4 +74,4 @@ module.exports = {
       ]
     })
   ],
-};
+});

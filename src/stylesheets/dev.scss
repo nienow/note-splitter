@@ -1,6 +1,11 @@
-:root {
-  --sn-stylekit-background-color: rgb(237, 228, 218);
-  --sn-stylekit-secondary-background-color: rgb(227, 213, 196);
-  --sn-stylekit-foreground-color: #222;
-  --sn-stylekit-border-color: rgb(217, 198, 177);
+@if $dev {
+  :root {
+    --sn-stylekit-font-size-editor: 16px;
+    --sn-stylekit-monospace-font: SFMono-Regular, Consolas, Liberation Mono, Menlo,
+    'Ubuntu Mono', courier, monospace;
+    --sn-stylekit-background-color: rgb(237, 228, 218);
+    --sn-stylekit-secondary-background-color: rgb(227, 213, 196);
+    --sn-stylekit-foreground-color: #222;
+    --sn-stylekit-border-color: rgb(217, 198, 177);
+  }
 }
