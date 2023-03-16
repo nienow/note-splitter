@@ -1,4 +1,4 @@
-name: Build
+name: Deploy
 
 on:
   push:
@@ -17,4 +17,9 @@ jobs:
           node-version: '18'
           cache: 'pnpm'
       - run: pnpm install
-      - run: pnpm run deploy
+      - run: pnpm run build
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: dist
