@@ -6,8 +6,7 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack",
-    "test": "jest test",
-    "deploy": "pnpm run build && gh-pages -d dist -b dist"
+    "test": "jest test"
   },
   "dependencies": {
     "@preact/compat": "^17.1.2",
