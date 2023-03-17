@@ -35,8 +35,6 @@ export const EditorProvider = ({text, save}) => {
   };
 
   const initializeText = (text) => {
-    console.log('initialize text 2');
-    console.log(text);
     if (!text) {
       const data = newData();
       setData(data);
@@ -58,12 +56,6 @@ export const EditorProvider = ({text, save}) => {
 
   const saveNote = () => {
     save(data);
-    // const text = JSON.stringify(data);
-    // try {
-    //   editor.onEditorValueChanged(text);
-    // } catch (error) {
-    //   console.log('Error saving note:', error);
-    // }
   };
 
   const saveNoteAndRefresh = () => {

@@ -9,6 +9,9 @@ module.exports = (env, argv) => ({
     filename: "[name].[contenthash].js",
     clean: true
   },
+  externals: {
+    'filesafe-js': {}
+  },
   module: {
     rules: [
       {

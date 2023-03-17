@@ -7,6 +7,7 @@ import {createRoot} from "react-dom/client";
 import {isDevEnv} from "./environment";
 import {TEST_DATA} from "./test-data";
 
+const params = new URLSearchParams(window.location.search);
 
 const save = (data: any) => {
   const text = JSON.stringify(data);
@@ -17,8 +18,6 @@ const save = (data: any) => {
   }
 };
 const initializeText = (text) => {
-  console.log('initialize text 1');
-  console.log(text);
   createRoot(document.getElementById('root')).render(
     <React.StrictMode>
       <App text={text} save={save}/>
@@ -26,7 +25,6 @@ const initializeText = (text) => {
   );
 };
 
-console.log('init editor');
 const editor = new EditorKit({
   setEditorRawText: initializeText,
   clearUndoHistory: () => {
@@ -37,6 +35,6 @@ const editor = new EditorKit({
   supportsFileSafe: false
 });
 
-if (isDevEnv()) {
+if (isDevEnv() || params.get('demo')) {
   initializeText(TEST_DATA);
 }
