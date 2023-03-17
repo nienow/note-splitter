@@ -58,7 +58,6 @@ module.exports = (env, argv) => ({
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Hot Module Replacement',
       template: "./src/index.html"
     }),
     new CopyPlugin({

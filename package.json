@@ -1,7 +1,7 @@
 {
-  "name": "sn-extensions",
+  "name": "note-splitter",
   "version": "0.1.0",
-  "homepage": "https://nienow.github.io/sn-extensions",
+  "homepage": "https://nienow.github.io/note-splitter",
   "private": true,
   "scripts": {
     "start": "webpack serve --mode development",
