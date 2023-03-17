@@ -22,8 +22,8 @@ const EditorContext = createContext<IEditorContext>({
 
 export const useEditor = () => useContext(EditorContext);
 
+let editor;
 export const EditorProvider = () => {
-  const [editor, setEditor] = useState(null);
   const [data, setData] = useState(null);
   const [unsupported, setUnsupported] = useState(false);
 
@@ -39,6 +39,8 @@ export const EditorProvider = () => {
   };
 
   const initializeText = (text) => {
+    console.log('initialize text');
+    console.log(text);
     if (!text) {
       const data = newData();
       setData(data);
@@ -54,7 +56,8 @@ export const EditorProvider = () => {
   };
 
   useEffect(() => {
-    setEditor(new EditorKit({
+    console.log('init editor');
+    editor = new EditorKit({
       setEditorRawText: initializeText,
       clearUndoHistory: () => {
       },
@@ -62,7 +65,7 @@ export const EditorProvider = () => {
     }, {
       mode: 'plaintext',
       supportsFileSafe: false
-    }));
+    });
 
     if (isDevEnv()) {
       initializeText(TEST_DATA);
