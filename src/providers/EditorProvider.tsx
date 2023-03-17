@@ -57,15 +57,17 @@ export const EditorProvider = () => {
 
   useEffect(() => {
     console.log('init editor');
-    editor = new EditorKit({
-      setEditorRawText: initializeText,
-      clearUndoHistory: () => {
-      },
-      getElementsBySelector: () => []
-    }, {
-      mode: 'plaintext',
-      supportsFileSafe: false
-    });
+    setTimeout(() => {
+      editor = new EditorKit({
+        setEditorRawText: initializeText,
+        clearUndoHistory: () => {
+        },
+        getElementsBySelector: () => []
+      }, {
+        mode: 'plaintext',
+        supportsFileSafe: false
+      });
+    }, 100);
 
     if (isDevEnv()) {
       initializeText(TEST_DATA);
