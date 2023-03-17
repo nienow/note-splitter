@@ -1,9 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import EditorKit from "@standardnotes/editor-kit";
 import Unsupported from "../components/Unsupported";
-import {isDevEnv} from "../environment";
 import {newData, transformEditorData} from "../transformations";
-import {TEST_DATA} from "../test-data";
 import {EDITORS} from "../definitions";
 
 interface IEditorContext {
@@ -22,8 +19,7 @@ const EditorContext = createContext<IEditorContext>({
 
 export const useEditor = () => useContext(EditorContext);
 
-let editor;
-export const EditorProvider = () => {
+export const EditorProvider = ({text, save}) => {
   const [data, setData] = useState(null);
   const [unsupported, setUnsupported] = useState(false);
 
@@ -39,7 +35,7 @@ export const EditorProvider = () => {
   };
 
   const initializeText = (text) => {
-    console.log('initialize text');
+    console.log('initialize text 2');
     console.log(text);
     if (!text) {
       const data = newData();
@@ -56,32 +52,18 @@ export const EditorProvider = () => {
   };
 
   useEffect(() => {
-    console.log('init editor');
-    setTimeout(() => {
-      editor = new EditorKit({
-        setEditorRawText: initializeText,
-        clearUndoHistory: () => {
-        },
-        getElementsBySelector: () => []
-      }, {
-        mode: 'plaintext',
-        supportsFileSafe: false
-      });
-    }, 100);
-
-    if (isDevEnv()) {
-      initializeText(TEST_DATA);
-    }
+    initializeText(text);
   }, []);
 
 
   const saveNote = () => {
-    const text = JSON.stringify(data);
-    try {
-      editor.onEditorValueChanged(text);
-    } catch (error) {
-      console.log('Error saving note:', error);
-    }
+    save(data);
+    // const text = JSON.stringify(data);
+    // try {
+    //   editor.onEditorValueChanged(text);
+    // } catch (error) {
+    //   console.log('Error saving note:', error);
+    // }
   };
 
   const saveNoteAndRefresh = () => {

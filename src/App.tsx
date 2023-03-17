@@ -3,11 +3,11 @@ import {DialogProvider} from "./providers/DialogProvider";
 import {PopoverProvider} from "./providers/PopoverProvider";
 import {EditorProvider} from "./providers/EditorProvider";
 
-const App = () => {
+const App = ({text, save}) => {
   return (
     <DialogProvider>
       <PopoverProvider>
-        <EditorProvider/>
+        <EditorProvider text={text} save={save}/>
       </PopoverProvider>
     </DialogProvider>
   );
