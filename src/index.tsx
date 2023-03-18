@@ -4,10 +4,6 @@ import EditorKit from "@standardnotes/editor-kit";
 import App from './App';
 import './stylesheets/main.scss';
 import {createRoot} from "react-dom/client";
-import {isDevEnv} from "./environment";
-import {TEST_DATA} from "./test-data";
-
-const params = new URLSearchParams(window.location.search);
 
 const save = (data: any) => {
   const text = JSON.stringify(data);
@@ -34,7 +30,3 @@ const editor = new EditorKit({
   mode: 'plaintext',
   supportsFileSafe: false
 });
-
-if (isDevEnv() || params.get('demo')) {
-  initializeText(TEST_DATA);
-}

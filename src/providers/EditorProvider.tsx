@@ -50,8 +50,9 @@ export const EditorProvider = ({text, save}) => {
   };
 
   useEffect(() => {
+    console.log('init text: ' + text);
     initializeText(text);
-  }, []);
+  }, [text]);
 
 
   const saveNote = () => {

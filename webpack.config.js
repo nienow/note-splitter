@@ -5,6 +5,10 @@ const version = PACKAGE.version;
 
 module.exports = (env, argv) => ({
   mode: 'production',
+  entry: {
+    main: 'index.tsx',
+    demo: 'demo/demo.tsx'
+  },
   output: {
     filename: "[name].[contenthash].js",
     clean: true
@@ -61,7 +65,14 @@ module.exports = (env, argv) => ({
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html"
+      filename: "index.html",
+      template: "./src/index.html",
+      chunks: ["main"]
+    }),
+    new HtmlWebpackPlugin({
+      filename: "demo.html",
+      template: "./src/index.html",
+      chunks: ["demo"]
     }),
     new CopyPlugin({
       patterns: [
