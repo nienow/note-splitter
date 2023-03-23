@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import {ISection} from "../definitions";
+import {useEditor} from "../providers/EditorProvider";
 
 interface Params {
   section: ISection;
@@ -19,6 +20,7 @@ const TitleInput = styled.input`
 `;
 
 const SectionTitle = ({section, onChange}: Params) => {
+  const {isLocked} = useEditor();
   const [title, setTitle] = useState(section.title);
 
   const onLocalChange = (e) => {
@@ -27,7 +29,7 @@ const SectionTitle = ({section, onChange}: Params) => {
   };
 
   return (
-    <TitleInput type="text" name="title" value={title} onChange={onLocalChange}/>
+    <TitleInput disabled={isLocked} type="text" name="title" value={title} onChange={onLocalChange}/>
   );
 }
 

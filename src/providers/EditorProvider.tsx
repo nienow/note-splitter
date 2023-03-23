@@ -8,18 +8,20 @@ interface IEditorContext {
   saveNote: () => void;
   saveNoteAndRefresh: () => void;
   changeEditor: (name: string) => void;
+  isLocked: boolean;
 }
 
 const EditorContext = createContext<IEditorContext>({
   data: null,
   saveNote: null,
   saveNoteAndRefresh: null,
-  changeEditor: null
+  changeEditor: null,
+  isLocked: false
 });
 
 export const useEditor = () => useContext(EditorContext);
 
-export const EditorProvider = ({text, save}) => {
+export const EditorProvider = ({text, save, isLocked}) => {
   const [data, setData] = useState(null);
   const [unsupported, setUnsupported] = useState(false);
 
@@ -50,7 +52,6 @@ export const EditorProvider = ({text, save}) => {
   };
 
   useEffect(() => {
-    console.log('init text: ' + text);
     initializeText(text);
   }, [text]);
 
@@ -74,9 +75,8 @@ export const EditorProvider = ({text, save}) => {
       return <div>Loading...</div>
     }
   };
-
   return (
-    <EditorContext.Provider value={{data, changeEditor, saveNote, saveNoteAndRefresh}}>
+    <EditorContext.Provider value={{data, changeEditor, saveNote, saveNoteAndRefresh, isLocked}}>
       {renderContent()}
     </EditorContext.Provider>
   );

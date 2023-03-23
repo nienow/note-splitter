@@ -15,19 +15,22 @@ const HeaderContainer = styled.div`
 
 const GridHeader = () => {
   const {confirm, alert} = useDialog();
-  const {data, saveNoteAndRefresh} = useEditor();
+  const {isLocked, data, saveNoteAndRefresh} = useEditor();
   const toggleTitle = () => {
+    if (isLocked) return;
     data.title = !data.title;
     saveNoteAndRefresh();
   };
 
   const increaseColumns = () => {
+    if (isLocked) return;
     data.columns++;
     makeSectionsFillRows(data);
     saveNoteAndRefresh();
   };
 
   const decreaseColumns = () => {
+    if (isLocked) return;
     if (data.columns > 1) {
       data.columns--;
     }
@@ -36,6 +39,7 @@ const GridHeader = () => {
   };
 
   const addRow = () => {
+    if (isLocked) return;
     for (let i = 0; i < data.columns; i++) {
       data.sections.push({});
     }
@@ -43,6 +47,7 @@ const GridHeader = () => {
   };
 
   const checkLastRow = () => {
+    if (isLocked) return;
     if (data.sections.length > data.columns) {
       const startChecking = data.sections.length - data.columns;
       const hasContent = !!data.sections.find((section, i) => i >= startChecking && !!section.text);

@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@preact/compat": "^17.1.2",
-    "@standardnotes/editor-kit": "2.2.5",
+    "@standardnotes/component-relay": "^2.2.2",
+    "@standardnotes/models": "^1.43.11",
     "@standardnotes/stylekit": "5.29.3",
     "preact": "^10.13.1",
     "styled-components": "^5.3.8"
@@ -47,7 +48,8 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.76.1",
     "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.11.1"
+    "webpack-dev-server": "^4.11.1",
+    "zip-webpack-plugin": "^4.0.1"
   },
   "browserslist": {
     "production": [

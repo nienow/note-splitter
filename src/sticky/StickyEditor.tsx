@@ -44,7 +44,6 @@ const StickyEditor = () => {
         section.index--;
       }
     });
-    console.log(transformedData);
     transformAndSave(true);
   };
 

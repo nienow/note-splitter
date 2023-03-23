@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
+import {useEditor} from "../providers/EditorProvider";
 
 interface Params {
   label: string;
@@ -63,8 +64,10 @@ const UncheckedSvg = () => {
 };
 
 const ToggleButton = ({label, initialValue, onToggle}: Params) => {
+  const {isLocked} = useEditor();
   const [value, setValue] = useState(initialValue);
   const toggle = () => {
+    if (isLocked) return;
     setValue(!value);
     onToggle(!value);
   };

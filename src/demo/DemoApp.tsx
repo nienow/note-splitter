@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
-import {DialogProvider} from "../providers/DialogProvider";
-import {PopoverProvider} from "../providers/PopoverProvider";
-import {EditorProvider} from "../providers/EditorProvider";
+import React, {useRef, useState} from 'react';
 import styled from "styled-components";
 import {DAILY_GOALS, RECIPES, SHOPPING_LIST, WEEKLY_PLANNER} from "./test-data";
+import App from "../App";
 
 const Container = styled.div`
   display: flex;
@@ -19,10 +17,24 @@ const Content = styled.div`
   flex: 1 1 auto;
 `;
 
-const MenuItem = styled.div`
+const ContentHeader = styled('div')`
+  border-bottom: 1px solid var(--sn-stylekit-border-color);
+  padding: 5px 20px;
+  display: flex;
+
+  div {
+    margin-right: 20px;
+  }
+`;
+
+const MenuItem = styled('div')`
   padding: 20px;
   cursor: pointer;
   border-bottom: 1px solid var(--sn-stylekit-border-color);
+
+  &.selected {
+    background-color: var(--sn-stylekit-secondary-background-color);
+  }
 `;
 
 const EXAMPLES = [
@@ -34,29 +46,39 @@ const EXAMPLES = [
 
 const DemoApp = () => {
   const [selected, setSelected] = useState(0);
+  const [disabled, setDisabled] = useState(false);
+  const lastSavedRef = useRef<HTMLDivElement>();
 
   const renderMenuItem = (_, i) => {
-    const styles = selected === i ? {'background-color': 'var(--sn-stylekit-secondary-background-color)'} : {};
-    return <MenuItem style={styles} onClick={() => setSelected(i)}>{EXAMPLES[i].title}</MenuItem>;
+    return <MenuItem className={selected === i ? 'selected' : ''} onClick={() => setSelected(i)}>{EXAMPLES[i].title}</MenuItem>;
+
+  };
+
+  const onToggleDisabled = (e) => {
+    setDisabled(e.target.checked);
   };
 
   const save = () => {
+    if (lastSavedRef.current) {
+      lastSavedRef.current.innerText = `Last Saved: ${new Date().toLocaleTimeString()}`;
+    }
   };
   return (
-    <DialogProvider>
-      <PopoverProvider>
-        <Container>
-          <Menu>
-            {
-              EXAMPLES.map(renderMenuItem)
-            }
-          </Menu>
-          <Content>
-            <EditorProvider text={EXAMPLES[selected].data} save={save}/>
-          </Content>
-        </Container>
-      </PopoverProvider>
-    </DialogProvider>
+    <Container>
+      <Menu>
+        {
+          EXAMPLES.map(renderMenuItem)
+        }
+      </Menu>
+      <Content>
+        <ContentHeader>
+          <div><input id="editingDisabled" type="checkbox" value={'' + disabled} onChange={onToggleDisabled}></input><label
+            htmlFor="editingDisabled"> Editing Disabled</label></div>
+          <div ref={lastSavedRef}></div>
+        </ContentHeader>
+        <App text={EXAMPLES[selected].data} save={save} isLocked={disabled}/>
+      </Content>
+    </Container>
   );
 }
 

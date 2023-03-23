@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styled from "styled-components";
 import {ISection} from "../definitions";
+import {useEditor} from "../providers/EditorProvider";
 
 interface Params {
   section: ISection;
@@ -22,6 +23,7 @@ const SectionTextArea = styled.textarea`
 `;
 
 const AutoSizeTextArea = ({section, onChange}: Params) => {
+  const {isLocked} = useEditor();
   const [text, setText] = useState(section.text);
   const ref = useRef<HTMLTextAreaElement>();
 
@@ -38,7 +40,7 @@ const AutoSizeTextArea = ({section, onChange}: Params) => {
   };
 
   return (
-    <SectionTextArea ref={ref} value={text} onChange={onLocalChange}></SectionTextArea>
+    <SectionTextArea disabled={isLocked} ref={ref} value={text} onChange={onLocalChange}></SectionTextArea>
   );
 }
 

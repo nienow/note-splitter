@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import {ISection} from "../definitions";
+import {useEditor} from "../providers/EditorProvider";
 
 const SectionTitle = styled.input`
   border: none;
@@ -32,6 +33,7 @@ interface Params {
 }
 
 const GridSection = (params: Params) => {
+  const {isLocked} = useEditor();
   const [text, setText] = useState(params.section.text || '');
   const [title, setTitle] = useState(params.section.title || '');
 
@@ -52,9 +54,9 @@ const GridSection = (params: Params) => {
   return (
     <>
       {
-        params.showTitle ? <SectionTitle type="text" name="title" value={title} onChange={onTitleChange}/> : <div></div>
+        params.showTitle ? <SectionTitle disabled={isLocked} type="text" name="title" value={title} onChange={onTitleChange}/> : <div></div>
       }
-      <SectionTextArea tabIndex={1} name="value" value={text} onChange={onTextChange}/>
+      <SectionTextArea disabled={isLocked} tabIndex={1} name="value" value={text} onChange={onTextChange}/>
     </>
   );
 };

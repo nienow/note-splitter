@@ -22,12 +22,12 @@ interface Params {
 }
 
 const EditorChoice = ({value}: Params) => {
-  const {changeEditor} = useEditor();
+  const {isLocked, changeEditor} = useEditor();
   const onSelectEditor = (e) => {
     changeEditor(e.target.value);
   };
   return (
-    <SelectBox value={value} onChange={onSelectEditor}>
+    <SelectBox value={value} onChange={onSelectEditor} disabled={isLocked}>
       <Option value="randombits.grid">Grid</Option>
       <Option value="randombits.section">Sections</Option>
       {/*<option value="randombits.tab">Tab</option>*/}

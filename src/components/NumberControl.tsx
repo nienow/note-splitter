@@ -36,12 +36,12 @@ interface Params {
   display: string;
 }
 
-const NumberControl = (params: Params) => {
+const NumberControl = ({increase, decrease, display}: Params) => {
   return (
     <ControlContainer>
-      <ControlButton onClick={params.decrease}>-</ControlButton>
-      <ControlLabel>{params.display}</ControlLabel>
-      <ControlButton onClick={params.increase}>+</ControlButton>
+      <ControlButton onClick={decrease}>-</ControlButton>
+      <ControlLabel>{display}</ControlLabel>
+      <ControlButton onClick={increase}>+</ControlButton>
     </ControlContainer>
   );
 }
