@@ -28,8 +28,8 @@ const EditorChoice = ({value}: Params) => {
   };
   return (
     <SelectBox value={value} onChange={onSelectEditor} disabled={isLocked}>
-      <Option value="randombits.grid">Grid</Option>
-      <Option value="randombits.section">Sections</Option>
+      <Option value="randombits.grid">Expand</Option>
+      <Option value="randombits.section">Collapse</Option>
       {/*<option value="randombits.tab">Tab</option>*/}
       {/*<option value="randombits.sticky">Sticky</option>*/}
     </SelectBox>

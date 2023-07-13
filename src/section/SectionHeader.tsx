@@ -4,7 +4,6 @@ import ToggleButton from "../components/ToggleButton";
 import NumberControl from "../components/NumberControl";
 import {useEditor} from "../providers/EditorProvider";
 import {makeSectionsFillRows} from "../transformations";
-import EditorChoice from "../components/EditorChoice";
 import {useDialog} from "../providers/DialogProvider";
 
 const HeaderContainer = styled.div`
@@ -15,11 +14,19 @@ const HeaderContainer = styled.div`
 
 const GridHeader = () => {
   const {confirm, alert} = useDialog();
-  const {isLocked, data, saveNoteAndRefresh} = useEditor();
+  const {isLocked, data, saveNoteAndRefresh, changeEditor} = useEditor();
   const toggleTitle = () => {
     if (isLocked) return;
     data.title = !data.title;
     saveNoteAndRefresh();
+  };
+
+  const toggleEditor = () => {
+    if (data.editor === 'randombits.grid') {
+      changeEditor('randombits.section');
+    } else {
+      changeEditor('randombits.grid');
+    }
   };
 
   const increaseColumns = () => {
@@ -74,10 +81,10 @@ const GridHeader = () => {
 
   return (
     <HeaderContainer>
-      <EditorChoice value={data.editor}/>
       <NumberControl increase={increaseColumns} decrease={decreaseColumns} display={numColumns + " column(s)"}/>
       <NumberControl increase={addRow} decrease={checkLastRow} display={rows + ' row(s)'}></NumberControl>
-      <ToggleButton label="Show Title" initialValue={data.title} onToggle={toggleTitle}/>
+      <ToggleButton label="Expand" label2="Collapse" initialValue={data.editor === 'randombits.grid'} onToggle={toggleEditor}/>
+      <ToggleButton label="Show Title" label2="Hide Title" initialValue={data.title} onToggle={toggleTitle}/>
     </HeaderContainer>
   );
 }

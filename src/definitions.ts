@@ -1,6 +1,4 @@
 import GridEditor from './grid/GridEditor';
-import StickyEditor from './sticky/StickyEditor';
-import TabEditor from './tab/TabEditor';
 import SectionEditor from './section/SectionEditor';
 
 export interface ISection {
@@ -18,7 +16,5 @@ export interface IData {
 
 export const EDITORS: { [key: string]: () => JSX.Element } = {
   'randombits.grid': GridEditor,
-  'randombits.sticky': StickyEditor,
-  'randombits.tab': TabEditor,
   'randombits.section': SectionEditor,
 };
